@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useUserMemoryStore } from '../store/userMemoryStore'
 
 export const usePersistentMemory = () => {
-  const { activityLog, setFromStorage } = useUserMemoryStore.getState()
+  const { activityLog, setFromStorage } = useUserMemoryStore()
 
   useEffect(() => {
     const stored = localStorage.getItem('activityLog')
@@ -17,6 +17,9 @@ export const usePersistentMemory = () => {
   }, [setFromStorage])
 
   useEffect(() => {
-    localStorage.setItem('activityLog', JSON.stringify(activityLog))
+    // Only save if activityLog is not empty
+    if (activityLog && Object.keys(activityLog).length > 0) {
+      localStorage.setItem('activityLog', JSON.stringify(activityLog))
+    }
   }, [activityLog])
 }

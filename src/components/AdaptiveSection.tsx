@@ -1,9 +1,8 @@
-import { useUserMemoryStore } from '../store/userMemoryStore'
+import { useUserActivity } from '../hooks/useUserActivity'
 
 const ITEMS = ['Dashboard', 'Reports', 'Settings', 'Profile', 'Notifications']
-
 export const AdaptiveSection = () => {
-  const activityLog = useUserMemoryStore((s) => s.activityLog)
+  const activityLog = useUserActivity('tabs')
 
   const sortedItems = [...ITEMS].sort((a, b) => {
     return (activityLog[b] || 0) - (activityLog[a] || 0)

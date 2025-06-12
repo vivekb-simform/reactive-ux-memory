@@ -1,11 +1,7 @@
-import { useUserActivity } from '../hooks/useUserActivity'
-import { usePersistentMemory } from '../hooks/usePersistentMemory'
 import { AdaptiveSection } from '../components/AdaptiveSection'
+import { AdaptiveSelect } from '../components/AdaptiveSelect'
 
 function Home() {
-  useUserActivity()
-  usePersistentMemory()
-
   return (
     <main className="p-6 max-w-xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">🧠 Adaptive UX Memory</h1>
@@ -13,7 +9,11 @@ function Home() {
         Click sections below. The UI will remember and prioritize based on your
         interaction.
       </p>
-      <AdaptiveSection />
+      <div className="flex w-full justify-between items-center mb-6">
+        <AdaptiveSection />
+
+        <AdaptiveSelect />
+      </div>
     </main>
   )
 }

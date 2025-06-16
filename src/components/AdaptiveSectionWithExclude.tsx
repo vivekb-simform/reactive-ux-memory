@@ -4,7 +4,7 @@ const ITEMS = ['Dashboard', 'Reports', 'Settings', 'Profile', 'Notifications']
 // Exclude 'Dashboard' from adaptive sorting, but still render it (not sorted adaptively)
 const EXCLUDE = ['Dashboard']
 export const AdaptiveSectionWithExclude = () => {
-  const activityLog = useUserActivity('tabs')
+  const { activityLog } = useUserActivity({ name: 'tabs', list: ITEMS })
 
   // Items to sort adaptively (excluding EXCLUDE)
   const adaptiveItems = ITEMS.filter((item) => !EXCLUDE.includes(item))
@@ -21,7 +21,7 @@ export const AdaptiveSectionWithExclude = () => {
         <div
           key={item}
           data-track={item}
-          className="cursor-pointer p-4 bg-blue-100 rounded shadow hover:bg-blue-200"
+          className="cursor-pointer p-4 bg-blue-800 rounded shadow hover:bg-blue-400"
         >
           {item}
         </div>

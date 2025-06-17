@@ -10,10 +10,13 @@ Users often repeat actions or focus on certain parts of an interface. By trackin
 
 ## 🔧 Features
 
-- **User Interaction Tracking**: Detects clicks on `data-track` elements.
+- **User Interaction Tracking**: Detects clicks and changes on `data-track` elements (including `<select>` and `<option>`).
 - **Persistent Memory**: Stores interaction counts in `localStorage`.
 - **Adaptive Rendering**: Reorders or highlights components based on tracked usage.
 - **Zustand Store**: Lightweight global store for tracking and updating activity.
+- **Flexible Tracking**: The `useUserActivity` hook works with both ref-based and global tracking. If a ref is attached to an element, tracking is scoped to that element; otherwise, it falls back to global (window) tracking.
+- **List Filtering**: If a list of valid keys is provided, only those keys are tracked.
+- **Manual Tracking Option**: Set `isManualTracking` to `true` to disable automatic event listeners and use the returned `recordActivity` function directly.
 
 ## 📦 Stack
 
@@ -25,7 +28,12 @@ Users often repeat actions or focus on certain parts of an interface. By trackin
 
 ### 1. `useUserActivity`
 
-A custom hook that listens for `click` events on elements with `data-track` attributes and updates memory.
+A custom hook that listens for `click` and `change` events on elements with `data-track` attributes and updates memory.
+
+- Handles `<select>` elements natively (tracks the selected `<option>`'s `data-track` or value).
+- Accepts an optional `ref` for scoped tracking, or falls back to global tracking if not attached.
+- Supports a `list` prop to restrict which keys are tracked.
+- Returns `{ activityLog, ref, recordActivity }`.
 
 ### 2. `usePersistentMemory`
 
@@ -38,6 +46,10 @@ Displays sections based on the priority from the activity log, showing the most 
 ### 4. Zustand Store (`userMemoryStore.ts`)
 
 Maintains and updates the `activityLog` globally.
+
+### 5. `AdaptiveSelect`
+
+A select dropdown that sorts its options based on user interaction frequency, using `useUserActivity`.
 
 ## 🚀 Getting Started
 
@@ -67,7 +79,8 @@ Imagine a dashboard where users constantly toggle between different filters. Ove
 
 ```
 ├── components
-│   └── AdaptiveSection.tsx
+│   ├── AdaptiveSection.tsx
+│   └── AdaptiveSelect.tsx
 ├── hooks
 │   ├── useUserActivity.ts
 │   └── usePersistentMemory.ts

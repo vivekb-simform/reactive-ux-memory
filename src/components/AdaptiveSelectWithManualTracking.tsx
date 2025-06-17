@@ -2,7 +2,11 @@ import { useUserActivity } from '../hooks/useUserActivity'
 
 const ITEMS = ['option 1', 'option 2', 'option 3', 'option 4', 'option 5']
 export const AdaptiveSelectWithManualTracking = () => {
-  const { activityLog, recordActivity } = useUserActivity({ name: 'select',list: ITEMS })
+  const { activityLog, recordActivity } = useUserActivity({
+    isManualTracking: true,
+    name: 'select',
+    list: ITEMS
+  })
 
   const sortedItems = [...ITEMS].sort((a, b) => {
     return (activityLog[b] || 0) - (activityLog[a] || 0)
